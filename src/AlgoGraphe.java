@@ -1,6 +1,3 @@
-// Algorithme de coloriage de graphes
-// AUTEURS : Clément ROIG & Adrien ROUX
-
 import java.util.ArrayList;
 
 public class AlgoGraphe {
@@ -11,17 +8,30 @@ public class AlgoGraphe {
 		this.graphe = g;
 	}
 	
-	public ArrayList<Sommet> vertexCover() {
+	public ArrayList<Sommet> maximumMatching() {
 		ArrayList<Sommet> vp = new ArrayList<Sommet>();
 		ArrayList<Arete> a = graphe.getAretes();
 		Arete x;
+		ArrayList<Arete> aSupprimer = new ArrayList<Arete>();
 		
 		while(!a.isEmpty()) {
 			x = a.get(0);
 			vp.add(x.getS1());
 			vp.add(x.getS2());
+			for(Arete ar : a) {
+				if(
+					ar.getS1() == x.getS1() || 
+					ar.getS2() == x.getS1()	||
+					ar.getS1() == x.getS2() || 
+					ar.getS2() == x.getS2()
+				) {
+					aSupprimer.add(ar);
+				}
+			}
+			for(Arete ar : aSupprimer) {
+				a.remove(ar);
+			}
 		}
-		
 		return vp;
 	}
 	
@@ -61,5 +71,7 @@ public class AlgoGraphe {
 
 		Graphe graphe1 = new Graphe("1",listSom1,listAr1);
 		System.out.println(graphe1);
+		
+		System.out.println(new AlgoGraphe(graphe1).maximumMatching());
 	}
 }
