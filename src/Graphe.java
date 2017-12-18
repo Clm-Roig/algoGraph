@@ -1,8 +1,12 @@
 import java.util.ArrayList;
 
-
 public class Graphe {
-	String name;
+	String name = "Bill le graphe";
+	private final String[] alphabet = {
+			"A", "B", "C", "D",
+			"E", "F", "G", "H", "I",
+			"J", "K", "L", "M"	                                   
+	};
 
 	ArrayList<Sommet> sommets = new ArrayList<Sommet>();
 	ArrayList<Arete> aretes = new ArrayList<Arete>();
@@ -12,7 +16,7 @@ public class Graphe {
 	ArrayList<Arete> aretesFixes = new ArrayList<Arete>();
 	ArrayList<Sommet> sommetsFixes = new ArrayList<Sommet>();
 
-	// Constructeur de base d'un GRaphe
+	// Constructeur de base d'un Graphe
 	public Graphe(String n, ArrayList<Sommet> listSom, ArrayList<Arete> listAr) {
 		this.name = n;
 
@@ -34,6 +38,21 @@ public class Graphe {
 		this.sommetsFixes = new ArrayList<Sommet>(g.sommetsFixes);
 		this.aretes = new ArrayList<Arete>(g.aretes);
 		this.aretesFixes = new ArrayList<Arete>(g.aretesFixes);
+	}
+	
+	// Constructeur graphe aléatoire avec nbS sommets
+	public Graphe(int nbS) {
+		// génération sommets
+		ArrayList<Sommet> listS = new ArrayList<Sommet>();
+		int i=0; 
+		while(i < nbS) {
+			listS.add(new Sommet(alphabet[i]));
+		}
+		this.sommets = listS;
+		
+		// TODO : génération arêtes
+		
+		
 	}
 
 	public String toString() {
