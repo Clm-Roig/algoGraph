@@ -23,4 +23,18 @@ public class Arete {
 		res += "---" + s2.toString();
 		return res;
 	}
+	
+	public boolean equals(Object obj) {
+		boolean res;
+		if(obj instanceof Arete) {
+			Arete ar = (Arete)obj;
+			res = ar.getS1().equals(this.getS1()) && ar.getS2().equals(this.getS2());
+			res = res||(ar.getS2().equals(this.getS1()) && ar.getS1().equals(this.getS2()));
+		}
+		else {
+			res = false;
+		}
+		return res;
+	}
+
 }

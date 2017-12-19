@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Graphe {
 	String name = "Bill le graphe";
@@ -11,22 +12,15 @@ public class Graphe {
 	ArrayList<Sommet> sommets = new ArrayList<Sommet>();
 	ArrayList<Arete> aretes = new ArrayList<Arete>();
 
-	// Ces deux listes ne sont jamais modifiées par les fonctions (contrairement à
-	// sommets et aretes qui sont vidées par colorier())
-	ArrayList<Arete> aretesFixes = new ArrayList<Arete>();
-	ArrayList<Sommet> sommetsFixes = new ArrayList<Sommet>();
-
 	// Constructeur de base d'un Graphe
 	public Graphe(String n, ArrayList<Sommet> listSom, ArrayList<Arete> listAr) {
 		this.name = n;
 
 		for(Sommet s : listSom) {
 			sommets.add(s);
-			sommetsFixes.add(s);
 		}
 		for(Arete a : listAr) {
 			aretes.add(a);
-			aretesFixes.add(a);
 		}
 
 	}
@@ -35,9 +29,7 @@ public class Graphe {
 	public Graphe(Graphe g) {
 		this.name = g.name;
 		this.sommets = new ArrayList<Sommet>(g.sommets);
-		this.sommetsFixes = new ArrayList<Sommet>(g.sommetsFixes);
 		this.aretes = new ArrayList<Arete>(g.aretes);
-		this.aretesFixes = new ArrayList<Arete>(g.aretesFixes);
 	}
 	
 	// Constructeur graphe aléatoire avec nbS sommets
@@ -47,22 +39,43 @@ public class Graphe {
 		int i=0; 
 		while(i < nbS) {
 			listS.add(new Sommet(alphabet[i]));
+			i++;
 		}
 		this.sommets = listS;
 		
-		// TODO : génération arêtes
+		// génération arêtes
+		ArrayList<Arete> listA = new ArrayList<Arete>();
+
+		int[][] tabArretes = new int[nbS][nbS];
+		for (i = 0; i < tabArretes.length; i++) {
+			for (int j = 0; j < tabArretes.length; j++) {
+				tabArretes[i][j] = ThreadLocalRandom.current().nextInt(0, 1 + 1);
+			}
+		}
 		
+		for (i = 0; i < tabArretes.length; i++) {
+			for (int j = 0; j < tabArretes.length; j++) {
+				if(tabArretes[i][j] == 1 && i != j) {
+					Arete ar = new Arete(listS.get(i), listS.get(j), 1);
+					if(!listA.contains(ar)) {
+						listA.add(ar);
+					}
+				}				
+			}
+		}	
 		
+		this.aretes = listA;
+						
 	}
 
 	public String toString() {
 		String res = "\n---- GRAPHE " + this.name + " ---\nSommets : ";
-		for(Sommet s : this.sommetsFixes) {
+		for(Sommet s : this.sommets) {
 			res += s.toString() + "  ";
 		}
 		res += "\nAretes : \n";
 
-		for(Arete ar : this.aretesFixes) {
+		for(Arete ar : this.aretes) {
 			res += ar.toString() + "  \n";
 		}
 		return res;
