@@ -6,8 +6,9 @@ public class AlgoGraphe {
 		
 	public AlgoGraphe(Graphe g) {
 		this.graphe = g;
-	}
+	} 
 	
+	// Maximal de couple disjoints
 	public ArrayList<Sommet> maxMatching() {
 		ArrayList<Sommet> vp = new ArrayList<Sommet>();
 		ArrayList<Arete> a = graphe.getAretes();
@@ -35,9 +36,11 @@ public class AlgoGraphe {
 		return vp;
 	}
 	
-	public ArrayList<Arete> vertexCover() {
-		ArrayList<Arete> la = new ArrayList<Arete>();
-
+	// Couvrir toutes les arêtes avec le minimum de sommet
+	public ArrayList<ArrayList<Sommet>> vertexCover() {
+		ArrayList<ArrayList<Sommet>> la = new ArrayList<ArrayList<Sommet>>();
+		
+		
 		
 		return la;
 	}
